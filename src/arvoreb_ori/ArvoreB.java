@@ -5,10 +5,7 @@
  */
 package arvoreb_ori;
 
-/**
- *
- * @author felipe
- */
+
 /**
  * Autores: Cassio, Felipe, Lucas, Lucas
  * RAs: 379697,
@@ -18,7 +15,7 @@ package arvoreb_ori;
  */
 
 /**
- * falta acertar umas l—gicas em rela�‹o aos n—s e chaves. mudei alguns construtores e atributos de Node
+ * falta acertar umas l—gicas em rela‹o aos n—s e chaves. mudei alguns construtores e atributos de Node
  */
 
 public class ArvoreB {
@@ -258,4 +255,3 @@ public class ArvoreB {
             // TODO code application logic here
         }
     }
-
