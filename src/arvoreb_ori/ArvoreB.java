@@ -3,7 +3,7 @@
  * Cassio Greco RA: 379697,
  * Felipe Fantoni RA: 407747, 
  * Lucas H. Pereira RA: 408220,
- * Lucas Lima Oliveira RA ?
+ * Lucas Lima Oliveira RA 407755
  *
  *
  * Classe ArvoreB contem dentro dela as classes Chave e Node
