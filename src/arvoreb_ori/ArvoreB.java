@@ -271,7 +271,7 @@ public class ArvoreB {
                                                         else
                                                            //faz a fusao 
                                                             
-                                                    //necessario realizar uma fusao ou emprestimo
+                                                    
     							
     						}	
     					}
