@@ -1,14 +1,16 @@
 /**
  * Autores: Cassio Greco, Felipe, Lucas, Lucas
- * RAs: 379697,
+ * RAs: 379697,407747,
  *
  * Classe ArvoreB contem dentro dela as classes Chave e Node
  *
  */
 
 /**
- * falta acertar umas l—gicas em rela‹o aos n—s e chaves. mudei alguns construtores e atributos de Node
+ * falta acertar umas lï¿½gicas em relaï¿½ï¿½o aos nï¿½s e chaves. mudei alguns construtores e atributos de Node
  */
+
+
 
 public class ArvoreB {
 		//variaveis public
@@ -42,8 +44,8 @@ public class ArvoreB {
             private int valor;
             //variaveis public
             /**
-             * Mudeu para node, pois as chaves apontam para nodes e n‹o para chaves espec’ficas
-             * Criei o atributo no_id (n— id) para saber em qual n— a chave est‡
+             * Mudeu para node, pois as chaves apontam para nodes e nï¿½o para chaves especï¿½ficas
+             * Criei o atributo no_id (nï¿½ id) para saber em qual nï¿½ a chave estï¿½
              */
             public Node filhoDir, filhoEsq;
             int no_id;
@@ -87,7 +89,7 @@ public class ArvoreB {
              */
             
             public boolean setDir(Node novoDir) {
-                //Nao pode adicionar um numero menor ˆ direita
+                //Nao pode adicionar um numero menor ï¿½ direita
                 if (valor > novoDir.getValor()) {
                     filhoDir = novoDir;
                     return true;
@@ -96,7 +98,7 @@ public class ArvoreB {
             }
 
             public boolean setEsq(Node novoEsq) {
-            	//Nao pode adicionar um numero maior ˆ direita
+            	//Nao pode adicionar um numero maior ï¿½ direita
                 if (valor < novoEsq.getValor()) {
                     filhoEsq = novoEsq;
                     return true;
@@ -108,25 +110,33 @@ public class ArvoreB {
 
     public class Node {
 
+        
         private int ordem;
         private Chave []chaves;
         private boolean folha;
         private int chavesUso;
-        //Para sabermos se Ž preciso fundir e/ou emprestar de outros n—s
+        //Para sabermos se ï¿½ preciso fundir e/ou emprestar de outros nï¿½s
         private int min_chaves = (ordem-1)/2;
-        //Para sabermos quais chaves est‹o em quais nodes
+        //Para sabermos quais chaves estï¿½o em quais nodes
         public int id;
+        public Node pai;
 
         //construtores
         public Node(int novaOrdem) {
             ordem = novaOrdem;
             chavesUso = 0;
         }
+
+        public Node(Node pai, int novaOrdem) {
+            ordem = novaOrdem;
+        }
         
+        /*
         public Node(Node raiz, int ordem_arvore){
         	raiz.ordem = ordem_arvore;
         	raiz.id = 0;
         }
+        */
 
         //construtor de fusao
         public Node(Node c1, Node c2, int antigoPai) {
@@ -173,9 +183,33 @@ public class ArvoreB {
             c2 = null;
         }
         
+        /*
         public Node getNode(Chave id){
         	for 
         }
+        */
+        
+        public void insereNo (int X)
+    {
+           int i=0;
+           //checa lotado
+           if(chavesUso==ordem-1){
+               Node novoNo = new Node(pai,ordem);
+              for(i=ordem/2+1;i<ordem-1;i++){
+                  novoNo.insereNo(chaves[i].getValor());
+                  chavesUso--;
+                  
+              }
+               pai.insereNo(chaves[ordem/2].getValor());
+               pai.chaves[pai.chavesUso].filhoDir= novoNo;
+           }
+           else{
+            chavesUso++;
+            chaves[chavesUso].setValor(X);
+           }
+       
+       
+    }
         
     }
     	/**
@@ -186,19 +220,20 @@ public class ArvoreB {
     	}
     
     	/**
-    	 * MŽtodo para pesqusiar se determinada chave est‡ dentro da arvore e/ou remove-la
+    	 * Mï¿½todo para pesqusiar se determinada chave estï¿½ dentro da arvore e/ou remove-la
     	 */
     	private boolean pesquisa_remova(Chave chave,Node raiz,boolean remova){
     		boolean achou = false;
+                int l;
     		Node no = raiz;
     		do{
     			/**
-    			 * Se o no pesquisado Ž vazio, a chave n‹o foi achada.
+    			 * Se o no pesquisado ï¿½ vazio, a chave nï¿½o foi achada.
     			 * Retorna false
     			 */
     			if(no == null)
     				return achou;
-    			for(int i=0;i<no.chaves.length;i++){
+    			for(int i=0;i<no.chavesUso;i++){
     				/**
     				 * Chave encontrada. Retorna true e a chave recebe o id do no
     				 */
@@ -209,31 +244,55 @@ public class ArvoreB {
     					 * Se a pesquisa for para remover uma chave
     					 */
     					if(remova){
-    						if (no.length>no.min_chaves){
+    						if (no.chavesUso > no.min_chaves){
     							no.chaves[i] = null;
-    							for(var k=i;k<no.length-1;k++)
+    							for(int k=i; k < no.chavesUso-1; k++)
     								no.chaves[k]=no.chaves[k+1];
-    						}else{ //Se Ž necessario realizar uma fusao ou emprestimo
+                                                                no.chavesUso--;
+                                                        
+    						}else{ 
+                                                       for(l=0;l<no.pai.chavesUso;l=l+2){
+                                                           if(no.pai.chaves[l].getEsq()==no || no.pai.chaves[l].getDir()==no){
+                                                               break;
+                                                           }
+                                                       }
+                                                //achado o no pai, ver se possivel rotacionar
+                                                    if( no.pai.chaves[l].getEsq().chavesUso>(ordem-1)/2) 
+                                                        //faz a rotacao com a esq
+                                                        
+                                                        
+                                                        
+                                                    else
+                                                        if( no.pai.chaves[l].getDir().chavesUso<(ordem-1)/2)    
+                                                        //faz a rotadao com a dir
+                                                            
+                                                            
+                                                        
+                                                        else
+                                                           //faz a fusao 
+                                                            
+                                                    //necessario realizar uma fusao ou emprestimo
     							
     						}	
     					}
     				}
     				/**
-    				 * Se a chave pesquisada for menor do que alguma chave do n—
-    				 * n‹o h‡ porque iterar mais.
-    				 * Desce-se para o n— filho esquerdo da chave
-    				 * que Ž maior do que o n— pesquisado
+    				 * Se a chave pesquisada for menor do que alguma chave do nï¿½
+    				 * nï¿½o hï¿½ porque iterar mais.
+    				 * Desce-se para o nï¿½ filho esquerdo da chave
+    				 * que ï¿½ maior do que o nï¿½ pesquisado
     				 */
-    				if(chave.getValor()<no.chaves[i].getValor()){
-    					no = no.chaves[i].filhoEsq();
+                                
+    				if(chave.getValor() < no.chaves[i].getValor()){
+    					no = no.chaves[i].getEsq();
     					break;
     				}
     				/**
-    				 * Sen‹o, ele verificou todas as chaves e Ž maior do que
-    				 * a maior chave que est‡ no n— e ent‹o desce-se para o filho
-    				 * ˆ direita do œltimo n— da chave
+    				 * Senï¿½o, ele verificou todas as chaves e ï¿½ maior do que
+    				 * a maior chave que estï¿½ no nï¿½ e entï¿½o desce-se para o filho
+    				 * ï¿½ direita do ï¿½ltimo nï¿½ da chave
     				 */
-    				if(chave.getValor()>no.chaves[length-1].getValor())
+    				if(chave.getValor() > no.chaves[no.chavesUso-1].getValor())
     					no = no.chaves[i].getDir();			
     			}
     		}while(achou!=true);
@@ -249,8 +308,35 @@ public class ArvoreB {
     	public boolean remover(Chave chave,Node raiz){
     		return pesquisa_remova(chave,raiz,true);
     		}
+        
+        // Insere na arovre 
+        public void insere(int X) {
+            Node busca = raiz;
+            int i = 0;
+            //sÃ³ insere em folha
+            while (!busca.folha) {
+                if (busca.chaves[i].getValor() > X) {
+                    busca = busca.chaves[i].getEsq();
+               
+                i = 0;
+                 }
+                else{
+                            if(busca.chaves[i].getValor()<X && busca.chaves[i+1].getValor()>X)
+                                busca=busca.chaves[i].getDir();
+                                i=0;
+                        }
+                i = i + 2;
+
+            }
+            
+            busca.insereNo(X);
+         
+        }
+        
+        
+        
     			
-    	}
+    	
     	
         public static void main(String[] args) {
             // TODO code application logic here
