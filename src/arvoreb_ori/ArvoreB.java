@@ -1,13 +1,5 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package arvoreb_ori;
-
-
 /**
- * Autores: Cassio, Felipe, Lucas, Lucas
+ * Autores: Cassio Greco, Felipe, Lucas, Lucas
  * RAs: 379697,
  *
  * Classe ArvoreB contem dentro dela as classes Chave e Node
@@ -15,7 +7,7 @@ package arvoreb_ori;
  */
 
 /**
- * falta acertar umas lâ€”gicas em relaÂâ€¹o aos nâ€”s e chaves. mudei alguns construtores e atributos de Node
+ * falta acertar umas l—gicas em rela‹o aos n—s e chaves. mudei alguns construtores e atributos de Node
  */
 
 public class ArvoreB {
@@ -50,8 +42,8 @@ public class ArvoreB {
             private int valor;
             //variaveis public
             /**
-             * Mudeu para node, pois as chaves apontam para nodes e nâ€¹o para chaves especâ€™ficas
-             * Criei o atributo no_id (nâ€” id) para saber em qual nâ€” a chave estâ€¡
+             * Mudeu para node, pois as chaves apontam para nodes e n‹o para chaves espec’ficas
+             * Criei o atributo no_id (n— id) para saber em qual n— a chave est‡
              */
             public Node filhoDir, filhoEsq;
             int no_id;
@@ -94,8 +86,8 @@ public class ArvoreB {
              * Falta mudar os novoDir e novoEsq para Node, pois eles apontam para nodes e nao chaves
              */
             
-            public boolean setDir(Chave novoDir) {
-                //Nao pode adicionar um numero menor Ë† direita
+            public boolean setDir(Node novoDir) {
+                //Nao pode adicionar um numero menor ˆ direita
                 if (valor > novoDir.getValor()) {
                     filhoDir = novoDir;
                     return true;
@@ -103,8 +95,8 @@ public class ArvoreB {
                 return false;
             }
 
-            public boolean setEsq(Chave novoEsq) {
-            	//Nao pode adicionar um numero maior Ë† direita
+            public boolean setEsq(Node novoEsq) {
+            	//Nao pode adicionar um numero maior ˆ direita
                 if (valor < novoEsq.getValor()) {
                     filhoEsq = novoEsq;
                     return true;
@@ -120,9 +112,9 @@ public class ArvoreB {
         private Chave []chaves;
         private boolean folha;
         private int chavesUso;
-        //Para sabermos se Å½ preciso fundir e/ou emprestar de outros nâ€”s
+        //Para sabermos se Ž preciso fundir e/ou emprestar de outros n—s
         private int min_chaves = (ordem-1)/2;
-        //Para sabermos quais chaves estâ€¹o em quais nodes
+        //Para sabermos quais chaves est‹o em quais nodes
         public int id;
 
         //construtores
@@ -181,17 +173,27 @@ public class ArvoreB {
             c2 = null;
         }
         
+        public Node getNode(Chave id){
+        	for 
+        }
+        
     }
+    	/**
+    	 * Metodo que chama o metodo pesquisa_remova para a pesquisa de uma chave
+    	 */
+    	public boolean pesquisa(Chave chave,Node raiz){
+    		return pesquisa_remova(chave,raiz,false);
+    	}
     
     	/**
-    	 * MÅ½todo para pesqusiar se determinada chave estâ€¡ dentro da arvore
+    	 * MŽtodo para pesqusiar se determinada chave est‡ dentro da arvore e/ou remove-la
     	 */
-    	public boolean pesquisa(Chave chave){
+    	private boolean pesquisa_remova(Chave chave,Node raiz,boolean remova){
     		boolean achou = false;
     		Node no = raiz;
     		do{
     			/**
-    			 * Se o no pesquisado Å½ vazio, a chave nâ€¹o foi achada.
+    			 * Se o no pesquisado Ž vazio, a chave n‹o foi achada.
     			 * Retorna false
     			 */
     			if(no == null)
@@ -201,23 +203,35 @@ public class ArvoreB {
     				 * Chave encontrada. Retorna true e a chave recebe o id do no
     				 */
     				if(chave.getValor()==no.chaves[i].getValor()){
-    					achou == true;
+    					achou = true;
     					chave.no_id = no.id;
+    					/**
+    					 * Se a pesquisa for para remover uma chave
+    					 */
+    					if(remova){
+    						if (no.length>no.min_chaves){
+    							no.chaves[i] = null;
+    							for(var k=i;k<no.length-1;k++)
+    								no.chaves[k]=no.chaves[k+1];
+    						}else{ //Se Ž necessario realizar uma fusao ou emprestimo
+    							
+    						}	
+    					}
     				}
     				/**
-    				 * Se a chave pesquisada for menor do que alguma chave do nâ€”
-    				 * nâ€¹o hâ€¡ porque iterar mais.
-    				 * Desce-se para o nâ€” filho esquerdo da chave
-    				 * que Å½ maior do que o nâ€” pesquisado
+    				 * Se a chave pesquisada for menor do que alguma chave do n—
+    				 * n‹o h‡ porque iterar mais.
+    				 * Desce-se para o n— filho esquerdo da chave
+    				 * que Ž maior do que o n— pesquisado
     				 */
     				if(chave.getValor()<no.chaves[i].getValor()){
     					no = no.chaves[i].filhoEsq();
     					break;
     				}
     				/**
-    				 * Senâ€¹o, ele verificou todas as chaves e Å½ maior do que
-    				 * a maior chave que estâ€¡ no nâ€” e entâ€¹o desce-se para o filho
-    				 * Ë† direita do Å“ltimo nâ€” da chave
+    				 * Sen‹o, ele verificou todas as chaves e Ž maior do que
+    				 * a maior chave que est‡ no n— e ent‹o desce-se para o filho
+    				 * ˆ direita do œltimo n— da chave
     				 */
     				if(chave.getValor()>no.chaves[length-1].getValor())
     					no = no.chaves[i].getDir();			
@@ -229,24 +243,11 @@ public class ArvoreB {
     		return achou;
     	}
     	
-    	public boolean remover(Chave chave){
-    		boolean removido = false;
-    		/**
-    		 * Se a chave nâ€¹o for encontrada, nâ€¹o pode ser removida.
-    		 * Return false
-    		 */
-    		if(!pesquisa(chave))
-    			return removido;
-    		else{
-    			/**
-    			 * Se a chave for encontrada, pega-se o nâ€” com o id de onde a chave estâ€¡,
-    			 * e verifica se o tamanho de chaves[] Å½ maior do que min_chaves (nâ€¹o Å½ necessâ€¡rio emprÅ½stimo)
-    			 * a chave Å½ removida do nâ€”.
-    			 * 
-    			 * Se o tamanho de chaves[] == min_chaves, um emprÅ½stimo Å½ necessâ€¡rio, tenho que verificar o tamanho dos nâ€”s irmaos
-    			 * E precisa fazer a fusâ€¹o tambÅ½m
-    			 */
-    			if(Node no)
+    	/**
+    	 * Metodo que chama pesquisa_remova para remover um no
+    	 */
+    	public boolean remover(Chave chave,Node raiz){
+    		return pesquisa_remova(chave,raiz,true);
     		}
     			
     	}
