@@ -1,6 +1,10 @@
 /**
- * Autores: Cassio Greco, Felipe, Lucas, Lucas
- * RAs: 379697,407747,
+ * Autores: 
+ * Cassio Greco RA: 379697,
+ * Felipe Fantoni RA: 407747, 
+ * Lucas H. Pereira RA: 408220,
+ * Lucas Lima Oliveira RA ?
+ *
  *
  * Classe ArvoreB contem dentro dela as classes Chave e Node
  *
